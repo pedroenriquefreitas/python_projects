@@ -118,6 +118,7 @@ if __name__ == '__main__':
         Aqui é o Pedro da Empresa Júnior-PUC-Rio, somos uma consultoria especializada em....
         </font>
         <img src="cid:image0" border=0 />
+        <img alt=3D"" style=3D"width:0px;max-height:0px;overflow:hidden" src=3D"https://mailfoogae.appspot.com/t?sender=3DacGFuZHJhZGVAZW1wcmVzYWp1bmlvci5jb20uYnI%3D&amp;type=3Dzerocontent&amp;guid=3D5a25310f-2be3-41a7-a7c2-0eb008c0ebf3"><font color=3D"#ffffff" size=3D"1">=E1=90=A7</font></div>
         </body>
         </html>
         """
