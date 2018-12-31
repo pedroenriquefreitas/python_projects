@@ -74,7 +74,7 @@ time.sleep(6.5)
 #coloca o assunto
 asst = driver.find_element_by_class_name("aoT")
 #asst.send_keys('Contato | Empresa Júnior PUC-Rio')
-asst.send_keys(Keys.TAB + '''Bom dia Pedro, tudo bem?
+asst.send_keys(Keys.TAB + '''Bom dia ''' + cont_na[0] + ''', tudo bem?
 
 Me chamo Pedro e hoje em dia trabalho na Empresa Júnior PUC-Rio, uma consultoria formada por jovens, estudantes da própria universidade. Realizamos diversos serviços - nas áreas de Marketing, Audiovisual, Arquitetura, Processos, Finanças, Assessoria de Imprensa e Design - com o intuito de alavancar empresas e fomentar o desenvolvimento de empreendimentos.
 
@@ -88,6 +88,7 @@ driver.find_element_by_id(':n0').click()
 driver.find_element_by_id(':mx').click()
 driver.find_element_by_id(':ta').click()
 
-for i in range ()
-
-driver.execute_script('''window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to=pandrade@empresajunior.com.br","_blank");''')
+if (qtd_c > 1):
+    for t in range (1, qtd_c):
+        scrpt = '''window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to="''' + cont_em[t] + ''',"_blank");'''
+        driver.execute_script(scrpt)
