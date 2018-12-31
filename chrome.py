@@ -29,10 +29,12 @@ if qtd_c <= 0:
 
 #mostra no terminal os emails que serao criados e pede para ser confirmado
 print('\nOs contatos analisados na planilha foram:')
+y = 0
 for i in range(4,(4+qtd_c)):
     cont_na.append((sheet.cell(row=i, column=3)).value)
     cont_em.append((sheet.cell(row=i, column=5)).value)
-    print(cont_na[i] + ' | ' + cont_em[i])
+    print(cont_na[y] + ' | ' + cont_em[y])
+    y = y + 1
 
 print('\nDeseja confirmar esses contatos acima?')
 resp1 = input('Y ou N\n')
@@ -48,7 +50,7 @@ if resp1 != 'Y':
 
 driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/pymailer/drivers/chromedriver')
 time.sleep(1)
-driver.get('https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to=' + cont_em[0])
+driver.get("https://accounts.google.com/AccountChooser?service=mail&continue=https://mail.google.com/mail/")
 
 #colocar o email
 login = driver.find_element_by_id('identifierId')
@@ -68,8 +70,10 @@ psw.send_keys('pefa1997')
 psw_n = driver.find_element_by_id('passwordNext')
 psw_n.click()
 
+time.sleep(1)
 #espera o gmail entrar e carregar a pagina do email
-time.sleep(6.5)
+driver.get('https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to=' + cont_em[0])
+time.sleep(5)
 
 #coloca o assunto
 asst = driver.find_element_by_class_name("aoT")
@@ -87,8 +91,12 @@ Você é a pessoa ideal para conversarmos sobre o assunto?
 driver.find_element_by_id(':n0').click()
 driver.find_element_by_id(':mx').click()
 driver.find_element_by_id(':ta').click()
+driver.find_element_by_id(':n0').click()
+driver.find_element_by_id(':op').click()
 
 if (qtd_c > 1):
     for t in range (1, qtd_c):
-        scrpt = '''window.open("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to="''' + cont_em[t] + ''',"_blank");'''
-        driver.execute_script(scrpt)
+        driver.execute_script("window.open('');")
+        driver.switch_to.window(driver.window_handles[t])
+        driver.get('https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to=' + cont_em[t])
+        #driver.find_element_by_link_text("https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&source=mailto&su=Contato+|+Empresa+Júnior+PUC-Rio&to=" + cont_em[t]).send_keys(Keys.COMMAND,"t")
