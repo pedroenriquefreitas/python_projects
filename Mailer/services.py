@@ -20,3 +20,10 @@ def serv_retrn():
     services_list['d1'] = 'Naming'
     services_list['d2'] = 'Identidade Visual + Naming'
     return services_list
+
+#função que retorna o texto do email variando para cada serviço
+def serv_body():
+    return
+#função que monta efetivamente o email, juntando a parte padrão com a variavel por serviço
+def mount_body(client_name, company_name, variav_body):
+    return

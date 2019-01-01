@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 import sys
+import pyautogui
 import openpyxl
 import time
 import services
@@ -33,6 +34,16 @@ def escrever_email(index):
     driver.find_element_by_id(':n0').click()
     driver.find_element_by_id(':op').click()
 
+    #anexar o ppt de prospecção
+    driver.find_element_by_id(':nb').click()
+    time.sleep(0.6) #apenas para esperar o computador abrir a janela
+    pyautogui.click(912, 138)
+    pyautogui.typewrite('Institucional - Empresa Júnior PUC-Rio')
+    time.sleep(1.5) #espera o computador exibir os resultados da pesquisa
+    pyautogui.click(518, 220)
+    pyautogui.click(939, 568)
+    time.sleep(0.8) #apenas para esperar o computador fechar a janela
+
 #função que abre nova janela com a url do gmail mailto
 def preparar_janela(a):
     driver.execute_script("window.open('');")
@@ -53,7 +64,7 @@ cont_se = []
 servs = services.serv_retrn()
 
 #abre o excel e pega os contatos que estão lá
-workbook = openpyxl.load_workbook('/Users/pedroenriqueandrade/Desktop/pymailer/Mailer/db.xlsx')
+workbook = openpyxl.load_workbook('/Users/pedroenriqueandrade/Desktop/python_projects/Mailer/db.xlsx')
 sheet = workbook.get_sheet_by_name('Sheet1')
 
 print('\nOs contatos analisados na planilha foram:')
@@ -80,7 +91,7 @@ if resp1 != 'Y':
     sys.exit('Paralizando as operacoes...\n')
 
 
-driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/pymailer/drivers/chromedriver')
+driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/Mailer/drivers/chromedriver')
 time.sleep(1)
 driver.get("https://accounts.google.com/AccountChooser?service=mail&continue=https://mail.google.com/mail/")
 
