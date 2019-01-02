@@ -91,7 +91,7 @@ if resp1 != 'Y':
     sys.exit('Paralizando as operacoes...\n')
 
 
-driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/Mailer/drivers/chromedriver')
+driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/drivers/chromedriver')
 time.sleep(1)
 driver.get("https://accounts.google.com/AccountChooser?service=mail&continue=https://mail.google.com/mail/")
 
