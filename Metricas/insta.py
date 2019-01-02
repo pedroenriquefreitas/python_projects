@@ -20,9 +20,12 @@ qtd_vids = 0
 #variavel que armazena a quantidade de imagens postadas
 qtd_imgs = 0
 
+#variavel que fala se é video ou nao
+is_video = False
+
 #precisamos saber qual o mes em questão que esta sendo avaliado
-print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
-mes = input('Qual o mês que sera avaliado?\n')
+#print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
+#mes = input('Qual o mês que sera avaliado?\n')
 
 driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/drivers/chromedriver')
 time.sleep(1)
@@ -43,7 +46,7 @@ vid = ''
 vid_likes = 0
 vid = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/span")
 if 'views' in vid.text:
-    print('yaaaaaaaa')
+    is_video = True
     pyautogui.click(798, 615)
     time.sleep(0.6)
     vid_likes = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/div/div[4]/span")
@@ -53,5 +56,14 @@ else:
     num_likes = driver.find_element_by_xpath("/html/body/div[3]/div/div[2]/div/article/div[2]/section[2]/div/div/div[4]/span")
     likes = num_likes.text
 
+comments = driver.find_elements_by_class_name("gElp9")
+comments_tot = len(comments) - 1
+
+if is_video:
+    print('O elemento é um video')
+else:
+    print('O elemento é uma foto estática')
 print('Quantidade de Likes:')
-print(likes, '\n')
+print(likes)
+print('Quantidade de Comentários:')
+print(comments_tot)
