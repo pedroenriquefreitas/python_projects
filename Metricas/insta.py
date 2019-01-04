@@ -114,6 +114,7 @@ while check_midia_month() == mes:
     next_insta_midia()
     time.sleep(1.9)
 
+driver.close()
 #depois de tudo print os resultados gerais para o meso
 print('\n\n\n')
 print('Resultados do Instagram para o mês ' + mes + '\n')
