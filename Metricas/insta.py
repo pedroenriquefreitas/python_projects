@@ -56,7 +56,7 @@ time.sleep(1)
 driver.get("https://instagram.com/empresajunior")
 time.sleep(1)
 
-#fecha a caixa do insta que pedi login
+#fecha a caixa do insta que pede login
 tyu = driver.find_element_by_xpath("//*[@id='react-root']/section/nav/div[2]/div/div/div[3]/div/div/section/div/button")
 tyu.click()
 

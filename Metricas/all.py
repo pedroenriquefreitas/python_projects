@@ -6,6 +6,29 @@ import time
 import pyautogui
 import openpyxl
 import csv
+import sys
+import random
+
+typing_speed = 10 #wpm
+def slow_type(t):
+    for l in t:
+        sys.stdout.write(l)
+        sys.stdout.flush()
+        time.sleep(random.random()*10.0/typing_speed)
+    print ('')
+
+print('\nAntes de começar, precisamos fazer algumas perguntas')
+print('E assim, todo o resto do trabalho você deixa comigo')
+
+print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
+mes = input('Qual o mês que será avaliado?\n')
+fllwrs = int(input('Quantos seguidores a página tinha no final do mês ' + mes + '?\n'))
+print('Também preciso saber quanto foi investido em AdWords no mês ' + mes + ' (coloque no formato xx.xx)')
+ad_mney = input('Quanto foi investido em AdWords?\n')
+
+print('Tudo certo, o resto você deixa comigo')
+
+slow_type('....')
 
 # BEGINNING OF GOOGLE PART ########################################################
 print('Começando a parte do Google')
@@ -20,8 +43,6 @@ pesquisas_descoberta = 0
 tot_visualizacs_emp = 0
 
 #precisamos saber quanto foi investido em adwords no mes em questão
-print('Para começar, preciso saber quanto foi investido em AdWords no mes em questão (coloque no formato xx.xx)')
-ad_mney = input('Quanto foi investido em AdWords neste mês?\n')
 ad_mney = round(float(ad_mney), 2)
 
 with open('/Users/pedroenriqueandrade/Desktop/g1.csv', 'r') as csv_file:
@@ -171,12 +192,10 @@ def check_midia_month(): #função que retorna qual o mês que a midia em quest�
 def next_insta_midia(): #função que passa para a proxima midia no insta (aperta a seta da direita na tela)
     driver.find_element_by_xpath("/html/body/div[3]/div/div[1]/div/div/a[contains(@class, 'HBoOv')]").click()
 
-#precisamos saber qual o mes em questão que esta sendo avaliado
-print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
-mes = input('Qual o mês que sera avaliado?\n')
+#o mês que sera analizado vai ser reservado na memoria no inicio do codigo
+#na parte do instagram ele é interpretado como string
 
-#o numero de seguidores no mês deve ser printado no primeiro dia do mes seguinta, uma vez que o instagram nao registra esse tipo de informação
-fllwrs = int(input('Quantos seguidores a página tinha no final do mês ' + mes + '?\n'))
+#o numero de seguidores é armazenado no comeco do codigo nas perguntas iniciais\
 
 #variavel que armazena a quantidade total de likes
 total_likes = 0
@@ -203,7 +222,7 @@ time.sleep(1)
 driver.get("https://instagram.com/empresajunior")
 time.sleep(1)
 
-#fecha a caixa do insta que pedi login
+#fecha a caixa do insta que pede login
 tyu = driver.find_element_by_xpath("//*[@id='react-root']/section/nav/div[2]/div/div/div[3]/div/div/section/div/button")
 tyu.click()
 
@@ -254,16 +273,82 @@ while check_midia_month() == mes:
     total_comments += comments_tot
     next_insta_midia()
     time.sleep(1.9)
-
 driver.close()
-
 print('Parte do Instagram Finalizada')
 # END OF INSTAGRAM PART ########################################################
+
+# BEGINNING OF CHAT PART ########################################################
+
+print('Começando a parte do Chat')
+
+def mes_dia_extenso(no):
+    month_list = ['null', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return month_list[no]
+
+mes = int(mes) #na parte do chat o mes é interpretado como int
+
+driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/drivers/chromedriver')
+time.sleep(1)
+driver.get("https://start.drift.com/login")
+time.sleep(1)
+
+log_host = driver.find_element_by_xpath('//*[@id="username"]')
+log_host.send_keys('faleconosco@empresajunior.com.br')
+
+driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/div/div[1]/form/button').click()
+
+time.sleep(1.8)
+
+pswd_host = driver.find_element_by_xpath('//*[@id="password"]')
+pswd_host.send_keys('gestorcomercial')
+
+
+driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/div/div/div/form/button').click()
+
+time.sleep(1)
+
+driver.get("https://app.drift.com/inboxes")
+
+time.sleep(1.5)
+
+conversas_chat = driver.find_elements_by_xpath('//*[@id="conversation-list"]/div/div/div[2]/div[1]/div[3]/div/div')
+
+p = 0
+for a in conversas_chat: #antes a lista conversas_chat continha apeans WebElements, nesse 'for' a gente faz com que ela agora seja uma lista de strings com as datas de cada conversa
+    conversas_chat[p] = a.get_attribute('title')
+    p += 1
+
+while not any(mes_dia_extenso(mes) in s for s in conversas_chat):
+    time.sleep(0.4)
+    driver.find_element_by_xpath('//*[@id="conversation-list"]/div/div/button').click()
+    conversas_chat = driver.find_elements_by_xpath('//*[@id="conversation-list"]/div/div/div[2]/div[1]/div[3]/div/div')
+    p = 0
+    for a in conversas_chat: #antes a lista conversas_chat continha apeans WebElements, nesse 'for' a gente faz com que ela agora seja uma lista de strings com as datas de cada conversa
+        conversas_chat[p] = a.get_attribute('title')
+        p += 1
+
+while mes_dia_extenso(mes) in conversas_chat[len(conversas_chat)-1]: #se o ultimo elemento da lista ainda é do mes desejado, devemos carregar mais pra ver se ainda ter algum chat sobrando
+    time.sleep(0.4)
+    driver.find_element_by_xpath('//*[@id="conversation-list"]/div/div/button').click()
+    conversas_chat = driver.find_elements_by_xpath('//*[@id="conversation-list"]/div/div/div[2]/div[1]/div[3]/div/div')
+    p = 0
+    for a in conversas_chat: #antes a lista conversas_chat continha apeans WebElements, nesse 'for' a gente faz com que ela agora seja uma lista de strings com as datas de cada conversa
+        conversas_chat[p] = a.get_attribute('title')
+        p += 1
+
+matching = [s for s in conversas_chat if mes_dia_extenso(mes) in s] #lista com os chats do periodos analisado
+for temp in driver.find_elements_by_xpath('//*[@id="conversation-list"]/div/div/div[2]/div[1]/div[3]/div/div'):
+    if (temp.get_attribute('title') == matching[len(matching)-1]):
+        temp.click()
+
+print('Parte do Chat Finalizada')
+# END OF CHAT PART ########################################################
 
 #agora colocar na planilha do excel
 workbook = openpyxl.load_workbook('/Users/pedroenriqueandrade/Desktop/python_projects/Metricas/template.xlsx')
 sheet = workbook.get_sheet_by_name('Sheet1')
 print('Planilha aberta com sucesso')
+sheet['D12'].value = len(matching)
 sheet['D19'].value = ad_mney
 sheet['D20'].value = pesq_emp
 sheet['D21'].value = pesquisas_diretas
