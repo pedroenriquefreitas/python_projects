@@ -395,5 +395,5 @@ sheet['D65'].value = total_comments
 sheet['D67'].value = qtd_vids
 sheet['D68'].value = vid_vws
 print('Valores inputados com sucesso com sucesso')
-workbook.save('/Users/pedroenriqueandrade/Desktop/python_projects/Metricas/' + mes + ' ' + ano'.xlsx')
+workbook.save('/Users/pedroenriqueandrade/Desktop/python_projects/Metricas/' + mes_dia_extenso_portugues(mes) + ' ' + str(ano) + '.xlsx')
 print('Planilha salva com sucesso')
