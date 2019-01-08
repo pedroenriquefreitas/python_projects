@@ -22,7 +22,9 @@ print('E assim, todo o resto do trabalho você deixa comigo')
 
 print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
 mes = input('Qual o mês que será avaliado ?\n')
-fllwrs = int(input('Quantos seguidores a página tinha no final do mês ' + mes + '?\n'))
+ano = input('E agora qual é o ano?\n')
+fllwrs = input('Quantos seguidores a página tinha no final do mês ' + mes + '?\n')
+fllwrs = int(fllwrs)
 print('Também preciso saber quanto foi investido em AdWords no mês ' + mes + ' (coloque no formato xx.xx)')
 ad_mney = input('Quanto foi investido em AdWords ?\n')
 ad_mney = round(float(ad_mney), 2) #arrendodar já que é quantia em dinheiro e só tem 2 casas decimais
@@ -222,7 +224,7 @@ i = 0
 driver = webdriver.Chrome('/Users/pedroenriqueandrade/Desktop/python_projects/drivers/chromedriver')
 time.sleep(1)
 driver.get("https://instagram.com/empresajunior")
-time.sleep(1)
+time.sleep(1.3)
 
 #fecha a caixa do insta que pede login
 tyu = driver.find_element_by_xpath("//*[@id='react-root']/section/nav/div[2]/div/div/div[3]/div/div/section/div/button")
@@ -285,6 +287,10 @@ print('Começando a parte do Chat')
 
 def mes_dia_extenso(no):
     month_list = ['null', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return month_list[no]
+
+def mes_dia_extenso_portugues(no):
+    month_list = ['null', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']
     return month_list[no]
 
 mes = int(mes) #na parte do chat o mes é interpretado como int
@@ -389,5 +395,5 @@ sheet['D65'].value = total_comments
 sheet['D67'].value = qtd_vids
 sheet['D68'].value = vid_vws
 print('Valores inputados com sucesso com sucesso')
-workbook.save('/Users/pedroenriqueandrade/Desktop/python_projects/Metricas/Dezembro.xlsx')
+workbook.save('/Users/pedroenriqueandrade/Desktop/python_projects/Metricas/' + mes + ' ' + ano'.xlsx')
 print('Planilha salva com sucesso')
