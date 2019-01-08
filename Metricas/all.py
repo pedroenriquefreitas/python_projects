@@ -21,11 +21,14 @@ print('\nAntes de começar, precisamos fazer algumas perguntas')
 print('E assim, todo o resto do trabalho você deixa comigo')
 
 print('Para começar, preciso saber qual o numero do mês que será avaliado (Jan-1, Fev-2, ...)')
-mes = input('Qual o mês que será avaliado?\n')
+mes = input('Qual o mês que será avaliado ?\n')
 fllwrs = int(input('Quantos seguidores a página tinha no final do mês ' + mes + '?\n'))
 print('Também preciso saber quanto foi investido em AdWords no mês ' + mes + ' (coloque no formato xx.xx)')
-ad_mney = input('Quanto foi investido em AdWords?\n')
-
+ad_mney = input('Quanto foi investido em AdWords ?\n')
+ad_mney = round(float(ad_mney), 2) #arrendodar já que é quantia em dinheiro e só tem 2 casas decimais
+print('Agora preciso saber quanto foi investido em propagandas no Facebook/Instagram no mês ' + mes + ' (coloque no formato xx.xx)')
+fbinsta_mney = input('Quanto foi investido em Facebook/Instagram ?\n')
+fbinsta_mney = round(float(fbinsta_mney), 2)
 print('Tudo certo, o resto você deixa comigo')
 
 slow_type('....')
@@ -43,7 +46,6 @@ pesquisas_descoberta = 0
 tot_visualizacs_emp = 0
 
 #precisamos saber quanto foi investido em adwords no mes em questão
-ad_mney = round(float(ad_mney), 2)
 
 with open('/Users/pedroenriqueandrade/Desktop/g1.csv', 'r') as csv_file:
     csv_reader = csv.reader(csv_file)
@@ -305,7 +307,7 @@ pswd_host.send_keys('gestorcomercial')
 
 driver.find_element_by_xpath('//*[@id="root"]/div/div/div[1]/div/div/div/form/button').click()
 
-time.sleep(1)
+time.sleep(2.5)
 
 driver.get("https://app.drift.com/inboxes")
 
@@ -354,6 +356,7 @@ sheet['D20'].value = pesq_emp
 sheet['D21'].value = pesquisas_diretas
 sheet['D22'].value = pesquisas_descoberta
 sheet['D23'].value = tot_visualizacs_emp
+sheet['D25'].value = fbinsta_mney
 sheet['D27'].value = curtidas
 sheet['D28'].value = novas_curtidas
 sheet['D29'].value = visualizcs
